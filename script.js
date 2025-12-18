@@ -58,22 +58,22 @@ function showNotification(title, message, type = 'info') {
         styles.textContent = `
             .notification {
                 position: fixed;
-                top: 20px;
-                right: 20px;
+                top: 1.25rem;
+                right: 1rem;
                 background: rgba(10, 14, 23, 0.95);
-                border-left: 4px solid var(--primary);
-                padding: 1rem;
-                border-radius: 8px;
+                border-left: 0.25rem solid var(--primary);
+                padding: 0.9rem 1rem;
+                border-radius: 0.5rem;
                 display: flex;
                 align-items: center;
-                gap: 1rem;
-                min-width: 300px;
-                max-width: 400px;
+                gap: 0.8rem;
+                min-width: min(20rem, 90%);
+                max-width: min(25rem, 95%);
                 z-index: 1000;
                 animation: slideIn 0.3s ease;
                 backdrop-filter: blur(10px);
-                border: 1px solid rgba(0, 255, 157, 0.2);
-                box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+                border: 1px solid rgba(0, 255, 157, 0.12);
+                box-shadow: 0 0.6rem 1.8rem rgba(0, 0, 0, 0.28);
             }
             @keyframes slideIn {
                 from { transform: translateX(100%); opacity: 0; }
@@ -87,18 +87,18 @@ function showNotification(title, message, type = 'info') {
             .notification-error { border-left-color: var(--danger); }
             .notification-warning { border-left-color: var(--warning); }
             .notification-info { border-left-color: var(--info); }
-            .notification-icon i { font-size: 1.5rem; }
+            .notification-icon i { font-size: clamp(1rem, 2.6vw, 1.5rem); }
             .notification-success .notification-icon i { color: var(--primary); }
             .notification-error .notification-icon i { color: var(--danger); }
             .notification-warning .notification-icon i { color: var(--warning); }
             .notification-info .notification-icon i { color: var(--info); }
-            .notification-content h4 { margin-bottom: 0.25rem; color: white; }
-            .notification-content p { color: #a0aec0; font-size: 0.9rem; margin: 0; }
+            .notification-content h4 { margin-bottom: 0.25rem; color: white; font-size: clamp(1rem,2.2vw,1.1rem); }
+            .notification-content p { color: #a0aec0; font-size: clamp(0.8rem, 1.6vw, 0.95rem); margin: 0; }
             .notification-close {
                 background: none;
                 border: none;
                 color: #a0aec0;
-                font-size: 1.5rem;
+                font-size: clamp(1rem,2.2vw,1.4rem);
                 cursor: pointer;
                 margin-left: auto;
             }
@@ -598,10 +598,10 @@ function createConfetti() {
         const confetti = document.createElement('div');
         confetti.style.cssText = `
             position: fixed;
-            width: 10px;
-            height: 10px;
+            width: 0.8rem;
+            height: 0.8rem;
             background: ${colors[Math.floor(Math.random() * colors.length)]};
-            top: -20px;
+            top: -2rem;
             left: ${Math.random() * 100}vw;
             border-radius: ${Math.random() > 0.5 ? '50%' : '0'};
             z-index: 9999;
@@ -692,6 +692,28 @@ document.addEventListener('DOMContentLoaded', function() {
             this.classList.add('active');
         });
     });
+
+    // Mobile hamburger toggle
+    const hamburger = document.getElementById('hamburgerBtn');
+    const mainNav = document.getElementById('mainNav');
+    if (hamburger && mainNav) {
+        hamburger.addEventListener('click', function() {
+            const isOpen = mainNav.classList.toggle('open');
+            hamburger.classList.toggle('active', isOpen);
+            hamburger.setAttribute('aria-expanded', isOpen ? 'true' : 'false');
+        });
+
+        // Close nav when a nav link is clicked (mobile)
+        mainNav.querySelectorAll('a, button').forEach(el => {
+            el.addEventListener('click', function() {
+                if (mainNav.classList.contains('open')) {
+                    mainNav.classList.remove('open');
+                    hamburger.classList.remove('active');
+                    hamburger.setAttribute('aria-expanded', 'false');
+                }
+            });
+        });
+    }
 });
 
 // Home page initialization
@@ -967,10 +989,7 @@ function showChallengeComplete(challengeNum, isCorrect) {
         styles.textContent = `
             .completion-overlay {
                 position: absolute;
-                top: 0;
-                left: 0;
-                right: 0;
-                bottom: 0;
+                inset: 0;
                 background: rgba(10, 14, 23, 0.95);
                 display: flex;
                 align-items: center;
@@ -979,18 +998,18 @@ function showChallengeComplete(challengeNum, isCorrect) {
                 animation: fadeIn 0.5s ease;
             }
             .completion-overlay.success {
-                border: 2px solid var(--primary);
+                border: 0.2rem solid var(--primary);
             }
             .completion-overlay.error {
-                border: 2px solid var(--danger);
+                border: 0.2rem solid var(--danger);
             }
             .completion-message {
                 text-align: center;
-                padding: 2rem;
+                padding: clamp(1rem, 2.5vw, 2rem);
             }
             .completion-message i {
-                font-size: 4rem;
-                margin-bottom: 1rem;
+                font-size: clamp(2rem, 6vw, 4rem);
+                margin-bottom: 0.75rem;
             }
             .completion-overlay.success .completion-message i {
                 color: var(--primary);
@@ -999,12 +1018,12 @@ function showChallengeComplete(challengeNum, isCorrect) {
                 color: var(--danger);
             }
             .completion-message h3 {
-                font-size: 2rem;
+                font-size: clamp(1.2rem, 3vw, 2rem);
                 margin-bottom: 0.5rem;
             }
             .completion-message p {
                 color: #a0aec0;
-                font-size: 1.1rem;
+                font-size: clamp(0.95rem, 1.6vw, 1.1rem);
             }
         `;
         document.head.appendChild(styles);
