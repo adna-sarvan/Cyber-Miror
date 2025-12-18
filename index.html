@@ -7,6 +7,17 @@
     <link rel="stylesheet" href="style.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+<<<<<<< HEAD
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- Za iOS Safari -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    
+    <!-- Za Android -->
+    <meta name="mobile-web-app-capable" content="yes">
+    
+=======
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
@@ -15,6 +26,7 @@
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <!-- Za Android -->
     <meta name="mobile-web-app-capable" content="yes">
+>>>>>>> 0de25d0047bcb2c899b779acf1f0628014254c20
     <!-- Za touch icons -->
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png">
@@ -35,8 +47,12 @@
                 <p class="tagline">Escape Room za digitalnu sigurnost</p>
             </div>
         </div>
+        <!-- Mobile hamburger -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNav">
+            <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+        </button>
         
-        <nav class="main-nav">
+        <nav id="mainNav" class="main-nav">
             <a href="#about" class="nav-link"><i class="fas fa-info-circle"></i> O aplikaciji</a>
             <a href="#features" class="nav-link"><i class="fas fa-star"></i> Značajke</a>
             <button class="start-btn" id="startBtn">
@@ -48,6 +64,7 @@
 
     <!-- Hero Section -->
     <main class="hero-section">
+        <div class="container">
         <div class="hero-content">
             <div class="hero-text">
                 <h2 class="cyber-title">Uđite u <span class="highlight">Cyber Escape Room</span></h2>
@@ -153,6 +170,7 @@
 
     <!-- About Section -->
     <section id="about" class="about-section">
+        <div class="container">
         <div class="section-header">
             <h2><i class="fas fa-info-circle"></i> Kako funkcioniše Cyber Mirror?</h2>
             <p>Tri koraka do bolje digitalne sigurnosti</p>
@@ -196,6 +214,7 @@
 
     <!-- Features Section -->
     <section id="features" class="features-section">
+        <div class="container">
         <div class="section-header">
             <h2><i class="fas fa-star"></i> Zašto je Cyber Mirror jedinstven?</h2>
         </div>
