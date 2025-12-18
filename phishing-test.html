@@ -127,18 +127,19 @@
         
         /* Fake Popup Styles */
         .fake-popup {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            position: relative;
             background: white;
             border-radius: 15px;
-            width: 90%;
-            max-width: 500px;
-            z-index: 10000;
+            width: min(92%, 520px);
+            max-width: 520px;
+            z-index: 10001;
             box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
-            overflow: hidden;
-            animation: popupIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+            box-sizing: border-box;
+            max-height: calc(100vh - 40px);
+            overflow-y: auto;
+            padding: clamp(0.75rem, 2.5vw, 1.25rem);
+            margin: 0 1rem;
+            animation: popupIn 0.42s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
         
         @keyframes popupIn {
@@ -240,13 +241,15 @@
         
         .overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.8);
+            inset: 0;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            background: rgba(0, 0, 0, 0.72);
             z-index: 9999;
             backdrop-filter: blur(5px);
+            padding: 1rem;
+            overflow: auto;
         }
         
         /* Results Screen */
@@ -326,6 +329,22 @@
     <div class="cyber-background"></div>
     
     <!-- Initial Test Screen -->
+    <!-- Mobile header with hamburger -->
+    <header class="main-header test-header">
+        <div class="logo-container">
+            <div class="logo-icon"><i class="fas fa-user-secret"></i></div>
+            <div class="logo-text"><h1>Cyber Mirror</h1></div>
+        </div>
+        <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNav">
+            <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+        </button>
+        <nav id="mainNav" class="main-nav">
+            <a href="index.html" class="nav-link"><i class="fas fa-home"></i> Početna</a>
+            <a href="escape-room.html" class="nav-link"><i class="fas fa-door-open"></i> Escape Room</a>
+            <a href="profile.html" class="nav-link"><i class="fas fa-user-circle"></i> Profil</a>
+        </nav>
+    </header>
+    
     <div class="test-container" id="initialScreen">
         <div class="test-content">
             <div class="test-icon">
@@ -360,34 +379,24 @@
     <!-- Hidden Test Elements -->
     <div class="hidden-test" id="hiddenTest">
         <!-- This content continues to look like a normal profile page -->
-        <header class="main-header">
-            <div class="logo-container">
-                <div class="logo-icon">
-                    <i class="fas fa-user-secret"></i>
-                </div>
-                <div class="logo-text">
-                    <h1>Cyber Mirror</h1>
-                    <span class="version">2.0</span>
-                </div>
-            </div>
-        </header>
         
-        <main style="padding: 2rem; max-width: 1000px; margin: 0 auto;">
+
+        <main class="container">
             <h2>Vaš Cyber Profil - Pregled</h2>
             <p>Analiza vašeg učinka u Escape Room-u je gotova. Evo detaljnog pregleda:</p>
             
-            <div class="stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0;">
-                <div class="stat-box" style="background: rgba(0, 255, 157, 0.1); padding: 1rem; border-radius: 10px;">
+            <div class="stats-grid" style="margin: 2rem 0;">
+                <div class="stat-box">
                     <h3>Cyber Score</h3>
-                    <div class="stat-value" style="font-size: 2rem; font-weight: bold;">85/100</div>
+                    <div class="stat-value">85/100</div>
                 </div>
-                <div class="stat-box" style="background: rgba(108, 99, 255, 0.1); padding: 1rem; border-radius: 10px;">
+                <div class="stat-box">
                     <h3>Globalni Rang</h3>
-                    <div class="stat-value" style="font-size: 2rem; font-weight: bold;">#247</div>
+                    <div class="stat-value">#247</div>
                 </div>
-                <div class="stat-box" style="background: rgba(0, 210, 255, 0.1); padding: 1rem; border-radius: 10px;">
+                <div class="stat-box">
                     <h3>Tačnost</h3>
-                    <div class="stat-value" style="font-size: 2rem; font-weight: bold;">92%</div>
+                    <div class="stat-value">92%</div>
                 </div>
             </div>
             
@@ -404,8 +413,8 @@
     </div>
     
     <!-- Fake Popup (will appear randomly) -->
-    <div class="overlay" id="popupOverlay" style="display: none;"></div>
-    <div class="fake-popup" id="fakePopup" style="display: none;">
+    <div class="overlay" id="popupOverlay" style="display: none;">
+        <div class="fake-popup" id="fakePopup" style="display: none;">
         <button class="popup-close" id="popupClose">
             <i class="fas fa-times"></i>
         </button>
@@ -428,6 +437,7 @@
             </div>
             
             <p class="small-text">Klikom na "Zatraži Nagradu" prihvatate naše uslove korištenja i pristajete na primanje promotivnih poruka.</p>
+        </div>
         </div>
     </div>
     
@@ -504,7 +514,7 @@
         
         function showPopup() {
             fakePopup.style.display = 'block';
-            popupOverlay.style.display = 'block';
+            popupOverlay.style.display = 'flex';
             
             // Setup event listeners
             popupClose.addEventListener('click', handlePopupClose);
