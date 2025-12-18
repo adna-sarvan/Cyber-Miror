@@ -14,7 +14,11 @@
     
     <!-- Profile Header -->
     <header class="profile-header">
-        <div class="profile-nav">
+        <!-- Mobile hamburger -->
+        <button class="hamburger" id="hamburgerBtn" aria-label="Open navigation" aria-expanded="false" aria-controls="mainNav">
+            <span class="hamburger-box"><span class="hamburger-inner"></span></span>
+        </button>
+        <div class="profile-nav main-nav" id="mainNav">
             <a href="index.html" class="nav-btn">
                 <i class="fas fa-home"></i> Početna
             </a>
@@ -542,5 +546,6 @@
             alert(`${title}: ${message}`);
         }
     </script>
+    <script src="script.js"></script>
 </body>
 </html>
