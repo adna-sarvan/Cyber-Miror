@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Mirror 2.0 - Escape Room</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Cyber Background -->
+    <div class="cyber-background"></div>
+    
+    <!-- Header -->
+    <header class="main-header">
+        <div class="logo-container">
+            <div class="logo-icon">
+                <i class="fas fa-user-secret"></i>
+            </div>
+            <div class="logo-text">
+                <h1>Cyber Mirror</h1>
+                <span class="version">2.0</span>
+                <p class="tagline">Escape Room za digitalnu sigurnost</p>
+            </div>
+        </div>
+        
+        <nav class="main-nav">
+            <a href="#about" class="nav-link"><i class="fas fa-info-circle"></i> O aplikaciji</a>
+            <a href="#features" class="nav-link"><i class="fas fa-star"></i> Značajke</a>
+            <button class="start-btn" id="startBtn">
+                <i class="fas fa-play"></i> Pokreni Escape Room
+            </button>
+            
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <main class="hero-section">
+        <div class="hero-content">
+            <div class="hero-text">
+                <h2 class="cyber-title">Uđite u <span class="highlight">Cyber Escape Room</span></h2>
+                <p class="hero-subtitle">Gdje će vaša digitalna sigurnost biti stavljena na probu</p>
+                
+                <div class="challenge-preview">
+                    <div class="challenge-card">
+                        <div class="challenge-icon">
+                            <i class="fas fa-key"></i>
+                        </div>
+                        <h3>Izazov 1: Lozinka Fortress</h3>
+                        <p>Prepoznajte jaku lozinku od slabih</p>
+                        <span class="difficulty easy">Lako</span>
+                    </div>
+                    
+                    <div class="challenge-card">
+                        <div class="challenge-icon">
+                            <i class="fas fa-envelope"></i>
+                        </div>
+                        <h3>Izazov 2: Phishing Labirint</h3>
+                        <p>Pronađite phishing email u inboxu</p>
+                        <span class="difficulty medium">Srednje</span>
+                    </div>
+                    
+                    <div class="challenge-card">
+                        <div class="challenge-icon">
+                            <i class="fas fa-wifi"></i>
+                        </div>
+                        <h3>Izazov 3: WiFi Zamka</h3>
+                        <p>Odaberite sigurnu WiFi mrežu</p>
+                        <span class="difficulty hard">Teško</span>
+                    </div>
+                </div>
+                
+                <div class="cta-section">
+                    <button class="cta-btn primary" onclick="startEscapeRoom()">
+                        <i class="fas fa-lock-open"></i> Pokreni Escape Room
+                    </button>
+                    <button class="cta-btn secondary" onclick="showDemo()">
+                        <i class="fas fa-eye"></i> Vidi Demo
+                    </button>
+                    <button class="cta-btn outline" onclick="goToDashboard()">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </button>
+                </div>
+                
+                <div class="stats">
+                    <div class="stat">
+                        <i class="fas fa-users"></i>
+                        <div>
+                            <h4>1,247+</h4>
+                            <p>Korisnika prošlo</p>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <h4>74%</h4>
+                            <p>Prosječni score</p>
+                        </div>
+                    </div>
+                    <div class="stat">
+                        <i class="fas fa-graduation-cap"></i>
+                        <div>
+                            <h4>89%</h4>
+                            <p>Poboljšanje znanja</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="hero-visual">
+                <div class="cyber-room">
+    <!-- PRVI RED -->
+    <div class="icon-row">
+        <div class="cyber-icon" data-label="Lozinka Fortress" data-number="01">
+            <i class="fas fa-key"></i>
+            <span class="icon-title">Lozinka Fortress</span>
+        </div>
+        
+        <div class="cyber-icon" data-label="Phishing Labirint" data-number="02">
+            <i class="fas fa-fish"></i>
+            <span class="icon-title">Phishing Labirint</span>
+        </div>
+    </div>
+    
+    <!-- DRUGI RED -->
+    <div class="icon-row">
+        <div class="cyber-icon" data-label="WiFi Zamka" data-number="03">
+            <i class="fas fa-wifi"></i>
+            <span class="icon-title">WiFi Zamka</span>
+        </div>
+        
+        <div class="cyber-icon" data-label="MCP Server" data-number="04">
+            <i class="fas fa-server"></i>
+            <span class="icon-title">MCP Server</span>
+        </div>
+    </div>
+</div>
+            </div>
+        </div>
+    </main>
+
+    <!-- About Section -->
+    <section id="about" class="about-section">
+        <div class="section-header">
+            <h2><i class="fas fa-info-circle"></i> Kako funkcioniše Cyber Mirror?</h2>
+            <p>Tri koraka do bolje digitalne sigurnosti</p>
+        </div>
+        
+        <div class="steps">
+            <div class="step">
+                <div class="step-number">1</div>
+                <h3>Igraj Escape Room</h3>
+                <p>Rješavaj cyber izazove u virtualnoj sobi. Svaki izazov testira drugu vještinu.</p>
+                <ul class="step-features">
+                    <li><i class="fas fa-check"></i> Analiza lozinki</li>
+                    <li><i class="fas fa-check"></i> Prepoznavanje phishinga</li>
+                    <li><i class="fas fa-check"></i> WiFi sigurnost</li>
+                </ul>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">2</div>
+                <h3>Vidi svoj Profil</h3>
+                <p>Dobij personalizovanu analizu svog ponašanja. AI analizira tvoje odluke.</p>
+                <ul class="step-features">
+                    <li><i class="fas fa-check"></i> Cyber tip (4 kategorije)</li>
+                    <li><i class="fas fa-check"></i> Detaljne statistike</li>
+                    <li><i class="fas fa-check"></i> Personalizovani savjeti</li>
+                </ul>
+            </div>
+            
+            <div class="step">
+                <div class="step-number">3</div>
+                <h3>Prođi Realni Test</h3>
+                <p>Neočekivani phishing test pokazuje koliko si stvarno oprezan.</p>
+                <ul class="step-features">
+                    <li><i class="fas fa-check"></i> Realističan popup napad</li>
+                    <li><i class="fas fa-check"></i> Test stvarnog ponašanja</li>
+                    <li><i class="fas fa-check"></i> Instant feedback</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section id="features" class="features-section">
+        <div class="section-header">
+            <h2><i class="fas fa-star"></i> Zašto je Cyber Mirror jedinstven?</h2>
+        </div>
+        
+        <div class="features-grid">
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-brain"></i>
+                </div>
+                <h3>Psihologija + Tehnologija</h3>
+                <p>Analiziramo kako stvarno razmišljate, ne samo šta znate.</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-gamepad"></i>
+                </div>
+                <h3>Gamifikacija</h3>
+                <p>Učenje kroz igru je 3x efikasnije od tradicionalnih kurseva.</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <h3>AI Analiza</h3>
+                <p>Personalizovane preporuke bazirane na tvom ponašanju.</p>
+            </div>
+            
+            <div class="feature">
+                <div class="feature-icon">
+                    <i class="fas fa-chart-line"></i>
+                </div>
+                <h3>Praćenje Napretka</h3>
+                <p>Vidi kako napreduješ kroz vrijeme sa detaljnim statistikama.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3><i class="fas fa-graduation-cap"></i> Za škole</h3>
+                <p>Implementiraj Cyber Mirror u nastavu. Pratite napredak studenata.</p>
+                <button class="footer-btn" onclick="goToDashboard()">
+                    <i class="fas fa-external-link-alt"></i> Otvori Dashboard
+                </button>
+            </div>
+            
+            <div class="footer-section">
+                <h3><i class="fas fa-code"></i> Tehnologije</h3>
+                <div class="tech-tags">
+                    <span>HTML5</span>
+                    <span>CSS3</span>
+                    <span>JavaScript</span>
+                    <span>LocalStorage</span>
+                    <span>Chart.js</span>
+                </div>
+            </div>
+            
+            <div class="footer-section">
+                <h3><i class="fas fa-trophy"></i> Takmičenje</h3>
+                <p>Cyber Security Competition 2025</p>
+                <p class="team-info">Tim: Softverasice</p>
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>Cyber Mirror 2.0 &copy; 2025 | Sva prava zadržana | Za edukativne svrhe</p>
+        </div>
+    </footer>
+
+    <!-- Start Modal -->
+    <div class="modal" id="startModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2><i class="fas fa-door-open"></i> Spreman za Escape Room?</h2>
+                <button class="modal-close" onclick="closeModal()">&times;</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p>Ova aplikacija će testirati tvoje STVARNO ponašanje, ne samo znanje.</p>
+                </div>
+                
+                <div class="user-setup">
+                    <div class="form-group">
+                        <label for="userName"><i class="fas fa-user"></i> Tvoje ime (opcionalno):</label>
+                        <input type="text" id="userName" placeholder="Unesi ime za personalizovani profil">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label><i class="fas fa-sliders-h"></i> Nivo težine:</label>
+                        <div class="difficulty-select">
+                            <button class="difficulty-option active" data-level="easy">Početni</button>
+                            <button class="difficulty-option" data-level="medium">Srednji</button>
+                            <button class="difficulty-option" data-level="hard">Napredni</button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="modal-instructions">
+                    <h4><i class="fas fa-list-ol"></i> Šta te čeka:</h4>
+                    <ol>
+                        <li><strong>3 cyber izazova</strong> u Escape Room-u</li>
+                        <li><strong>Personalizovani profil</strong> sa analizom</li>
+                        <li><strong>Realni test</strong> - budi oprezan!</li>
+                        <li><strong>Detaljni rezultati</strong> i preporuke</li>
+                    </ol>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button class="modal-btn secondary" onclick="closeModal()">
+                    <i class="fas fa-times"></i> Odustani
+                </button>
+                <button class="modal-btn primary" onclick="confirmStart()">
+                    <i class="fas fa-play"></i> Započni Escape Room
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Mirror - Escape Room</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Cyber Background -->
+    <div class="cyber-background"></div>
+    
+    <!-- Escape Room Header -->
+    <header class="escape-header">
+        <div class="escape-info">
+            <a href="index.html" class="back-btn">
+                <i class="fas fa-arrow-left"></i> Nazad
+            </a>
+            <div class="room-title">
+                <h1><i class="fas fa-door-closed"></i> Cyber Escape Room</h1>
+                <p class="room-subtitle">Izađi iz sobe rješavajući cyber izazove</p>
+            </div>
+        </div>
+        
+        <div class="escape-stats">
+            <div class="stat-box">
+                <i class="fas fa-clock"></i>
+                <div>
+                    <span class="stat-label">Vrijeme</span>
+                    <span class="stat-value" id="timer">15:00</span>
+                </div>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-star"></i>
+                <div>
+                    <span class="stat-label">Bodovi</span>
+                    <span class="stat-value" id="score">0</span>
+                </div>
+            </div>
+            <div class="stat-box">
+                <i class="fas fa-lock-open"></i>
+                <div>
+                    <span class="stat-label">Izazovi</span>
+                    <span class="stat-value">1/3</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <!-- Progress Bar -->
+    <div class="escape-progress">
+        <div class="progress-steps">
+            <div class="step active" data-step="1">
+                <div class="step-icon">
+                    <i class="fas fa-key"></i>
+                </div>
+                <span class="step-label">Lozinka</span>
+            </div>
+            <div class="step" data-step="2">
+                <div class="step-icon">
+                    <i class="fas fa-envelope"></i>
+                </div>
+                <span class="step-label">Phishing</span>
+            </div>
+            <div class="step" data-step="3">
+                <div class="step-icon">
+                    <i class="fas fa-wifi"></i>
+                </div>
+                <span class="step-label">WiFi</span>
+            </div>
+        </div>
+        <div class="progress-line">
+            <div class="progress-fill" id="progressFill"></div>
+        </div>
+    </div>
+
+    <!-- Main Game Container -->
+    <main class="game-container">
+        <!-- Challenge 1: Password -->
+        <section class="challenge active" id="challenge1">
+            <div class="challenge-header">
+                <div class="challenge-title">
+                    <h2><i class="fas fa-key"></i> Izazov 1: Lozinka Fortress</h2>
+                    <span class="difficulty-tag easy">Lako</span>
+                </div>
+                <div class="challenge-timer">
+                    <i class="fas fa-hourglass-half"></i>
+                    <span id="challenge1Timer">60</span>s
+                </div>
+            </div>
+            
+            <div class="challenge-description">
+                <p>U sobi vidite monitor sa 4 lozinke. <strong>Odaberite najjaču lozinku</strong> da otključate vrata.</p>
+                <p class="hint"><i class="fas fa-lightbulb"></i> Hint: Jaka lozinka ima više od 12 znakova, velika/mala slova, brojeve i simbole.</p>
+            </div>
+            
+            <div class="password-grid">
+                <div class="password-card" data-password="weak1" onclick="selectPassword(this, 'weak')">
+                    <div class="password-text">password123</div>
+                    <div class="password-strength weak">
+                        <div class="strength-bar"></div>
+                        <span>Slaba</span>
+                    </div>
+                    <div class="password-hint">
+                        <i class="fas fa-times-circle"></i>
+                        <span>Prekratka i predvidljiva</span>
+                    </div>
+                </div>
+                
+                <div class="password-card" data-password="strong" onclick="selectPassword(this, 'strong')">
+                    <div class="password-text">Maja#2023!</div>
+                    <div class="password-strength strong">
+                        <div class="strength-bar"></div>
+                        <span>Jaka</span>
+                    </div>
+                    <div class="password-hint">
+                        <i class="fas fa-check-circle"></i>
+                        <span>12+ znakova, simboli, brojevi</span>
+                    </div>
+                </div>
+                
+                <div class="password-card" data-password="weak2" onclick="selectPassword(this, 'weak')">
+                    <div class="password-text">123456</div>
+                    <div class="password-strength very-weak">
+                        <div class="strength-bar"></div>
+                        <span>Vrlo slaba</span>
+                    </div>
+                    <div class="password-hint">
+                        <i class="fas fa-times-circle"></i>
+                        <span>Najčešća lozinka na svijetu</span>
+                    </div>
+                </div>
+                
+                <div class="password-card" data-password="medium" onclick="selectPassword(this, 'medium')">
+                    <div class="password-text">B@sK3tb@11!</div>
+                    <div class="password-strength medium">
+                        <div class="strength-bar"></div>
+                        <span>Srednja</span>
+                    </div>
+                    <div class="password-hint">
+                        <i class="fas fa-info-circle"></i>
+                        <span>Dobra ali predvidljiva zamjena slova</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="password-builder">
+                <h3><i class="fas fa-tools"></i> Izgradi svoju jaku lozinku:</h3>
+                <div class="builder-area">
+                    <div class="password-display" id="builtPassword">Vaša lozinka će se pojaviti ovdje</div>
+                    <div class="builder-options">
+                        <button class="builder-btn" onclick="addToPassword('Majka')">
+                            <i class="fas fa-font"></i> Riječ
+                        </button>
+                        <button class="builder-btn" onclick="addToPassword('#')">
+                            <i class="fas fa-hashtag"></i> Simbol
+                        </button>
+                        <button class="builder-btn" onclick="addToPassword('2024')">
+                            <i class="fas fa-calendar-alt"></i> Godina
+                        </button>
+                        <button class="builder-btn" onclick="addToPassword('!')">
+                            <i class="fas fa-exclamation"></i> Usklik
+                        </button>
+                        <button class="builder-btn danger" onclick="clearPassword()">
+                            <i class="fas fa-trash"></i> Obriši
+                        </button>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="challenge-actions">
+                <button class="action-btn secondary" onclick="showHint('password')">
+                    <i class="fas fa-question-circle"></i> Pokaži Rješenje
+                </button>
+                <button class="action-btn primary" onclick="submitPassword()">
+                    <i class="fas fa-unlock"></i> Otključaj Izazov
+                </button>
+            </div>
+        </section>
+
+        <!-- Challenge 2: Phishing -->
+        <section class="challenge" id="challenge2">
+            <div class="challenge-header">
+                <div class="challenge-title">
+                    <h2><i class="fas fa-envelope"></i> Izazov 2: Phishing Labirint</h2>
+                    <span class="difficulty-tag medium">Srednje</span>
+                </div>
+                <div class="challenge-timer">
+                    <i class="fas fa-hourglass-half"></i>
+                    <span id="challenge2Timer">90</span>s
+                </div>
+            </div>
+            
+            <div class="challenge-description">
+                <p>Na kompjuteru vidite inbox sa 3 emaila. <strong>Pronađite phishing email</strong> i označite sve sumnjive elemente.</p>
+                <p class="hint"><i class="fas fa-lightbulb"></i> Hint: Provjerite pošiljaoca, gramatiku, URL-ove i urgentni ton.</p>
+            </div>
+            
+            <div class="email-inbox">
+                <div class="email-tabs">
+                    <button class="email-tab active" onclick="showEmail(1)">📧 Email 1: Facebook Security</button>
+                    <button class="email-tab" onclick="showEmail(2)">📧 Email 2: Netflix</button>
+                    <button class="email-tab" onclick="showEmail(3)">📧 Email 3: Paket služba</button>
+                </div>
+                
+                <div class="email-viewer" id="emailViewer">
+                    <!-- Email 1 Content (will be loaded by JS) -->
+                </div>
+                
+                <div class="email-tools">
+                    <h3><i class="fas fa-search"></i> Analiziraj Email:</h3>
+                    <div class="tool-buttons">
+                        <button class="tool-btn" onclick="analyzeSender()">
+                            <i class="fas fa-user-secret"></i> Provjeri Pošiljaoca
+                        </button>
+                        <button class="tool-btn" onclick="analyzeLinks()">
+                            <i class="fas fa-link"></i> Provjeri Linkove
+                        </button>
+                        <button class="tool-btn" onclick="checkGrammar()">
+                            <i class="fas fa-spell-check"></i> Provjeri Gramatiku
+                        </button>
+                    </div>
+                    
+                    <div class="suspicious-tags">
+                        <h4>Označi sumnjive elemente:</h4>
+                        <div class="tags-container">
+                            <button class="suspicious-tag" data-tag="urgent" onclick="toggleTag(this)">
+                                <i class="fas fa-exclamation"></i> Urgentni ton
+                            </button>
+                            <button class="suspicious-tag" data-tag="grammar" onclick="toggleTag(this)">
+                                <i class="fas fa-font"></i> Loša gramatika
+                            </button>
+                            <button class="suspicious-tag" data-tag="sender" onclick="toggleTag(this)">
+                                <i class="fas fa-at"></i> Sumnjiv pošiljalac
+                            </button>
+                            <button class="suspicious-tag" data-tag="link" onclick="toggleTag(this)">
+                                <i class="fas fa-external-link-alt"></i> Sumnjiv link
+                            </button>
+                            <button class="suspicious-tag" data-tag="attachment" onclick="toggleTag(this)">
+                                <i class="fas fa-paperclip"></i> Sumnjiv attachment
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="challenge-actions">
+                <button class="action-btn secondary" onclick="showHint('phishing')">
+                    <i class="fas fa-question-circle"></i> Pomoć
+                </button>
+                <button class="action-btn warning" onclick="reportEmail()">
+                    <i class="fas fa-flag"></i> Prijavi kao Phishing
+                </button>
+                <button class="action-btn primary" onclick="submitPhishing()">
+                    <i class="fas fa-check-circle"></i> Potvrdi Odabir
+                </button>
+            </div>
+        </section>
+
+        <!-- Challenge 3: WiFi -->
+        <section class="challenge" id="challenge3">
+            <div class="challenge-header">
+                <div class="challenge-title">
+                    <h2><i class="fas fa-wifi"></i> Izazov 3: WiFi Zamka</h2>
+                    <span class="difficulty-tag hard">Teško</span>
+                </div>
+                <div class="challenge-timer">
+                    <i class="fas fa-hourglass-half"></i>
+                    <span id="challenge3Timer">120</span>s
+                </div>
+            </div>
+            
+            <div class="challenge-description">
+                <p>U kafiću "Digital Brew" vidite 4 WiFi mreže. <strong>Odaberite sigurnu mrežu</strong> da se povežete.</p>
+                <p class="hint"><i class="fas fa-lightbulb"></i> Hint: "Evil twin" napadi koriste slična imena legitimnim mrežama.</p>
+            </div>
+            
+            <div class="wifi-scanner">
+                <div class="scanner-header">
+                    <i class="fas fa-satellite-dish"></i>
+                    <h3>WiFi Scanner - Digital Brew</h3>
+                    <span class="signal-indicator">
+                        <i class="fas fa-signal"></i>
+                        Jačina signala
+                    </span>
+                </div>
+                
+                <div class="wifi-networks">
+                    <div class="wifi-network suspicious" onclick="selectWifi(this, 'suspicious')">
+                        <div class="network-info">
+                            <div class="network-name">
+                                <i class="fas fa-wifi"></i>
+                                <div>
+                                    <h4>Starbucks_Free_WiFi</h4>
+                                    <p class="network-security">Open • No encryption</p>
+                                </div>
+                            </div>
+                            <div class="network-signal">
+                                <div class="signal-bars strong">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <span class="signal-text">Odličan</span>
+                            </div>
+                        </div>
+                        <div class="network-warning">
+                            <i class="fas fa-exclamation-triangle"></i>
+                            <span>Sumnjivo: Starbucks nije vlasnik ove lokacije</span>
+                        </div>
+                    </div>
+                    
+                    <div class="wifi-network safe" onclick="selectWifi(this, 'safe')">
+                        <div class="network-info">
+                            <div class="network-name">
+                                <i class="fas fa-wifi"></i>
+                                <div>
+                                    <h4>Digital_Brew_Guest</h4>
+                                    <p class="network-security">WPA2 • Password protected</p>
+                                </div>
+                            </div>
+                            <div class="network-signal">
+                                <div class="signal-bars medium">
+                                    <span></span><span></span><span class="weak"></span>
+                                </div>
+                                <span class="signal-text">Dobar</span>
+                            </div>
+                        </div>
+                        <div class="network-note">
+                            <i class="fas fa-check-circle"></i>
+                            <span>Ime lokala + "Guest" = legitimna mreža</span>
+                        </div>
+                    </div>
+                    
+                    <div class="wifi-network very-suspicious" onclick="selectWifi(this, 'very-suspicious')">
+                        <div class="network-info">
+                            <div class="network-name">
+                                <i class="fas fa-wifi"></i>
+                                <div>
+                                    <h4>FREE_Public_WiFi</h4>
+                                    <p class="network-security">Open • No password</p>
+                                </div>
+                            </div>
+                            <div class="network-signal">
+                                <div class="signal-bars strong">
+                                    <span></span><span></span><span></span>
+                                </div>
+                                <span class="signal-text">Odličan</span>
+                            </div>
+                        </div>
+                        <div class="network-warning danger">
+                            <i class="fas fa-skull-crossbones"></i>
+                            <span>VRLO SUMNJIVO: Česta "honeypot" mreža</span>
+                        </div>
+                    </div>
+                    
+                    <div class="wifi-network medium" onclick="selectWifi(this, 'medium')">
+                        <div class="network-info">
+                            <div class="network-name">
+                                <i class="fas fa-wifi"></i>
+                                <div>
+                                    <h4>DigitalBrew_Official</h4>
+                                    <p class="network-security">WPA3 • Enterprise security</p>
+                                </div>
+                            </div>
+                            <div class="network-signal">
+                                <div class="signal-bars weak">
+                                    <span></span><span class="weak"></span><span class="weak"></span>
+                                </div>
+                                <span class="signal-text">Slab</span>
+                            </div>
+                        </div>
+                        <div class="network-note">
+                            <i class="fas fa-info-circle"></i>
+                            <span>Legitimna ali slaba veza - pitaj osoblje za password</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="wifi-analysis">
+                    <h4><i class="fas fa-shield-alt"></i> Sigurnosna Analiza:</h4>
+                    <div class="security-tips">
+                        <div class="security-tip">
+                            <i class="fas fa-check green"></i>
+                            <span>WPA2/WPA3 su sigurni</span>
+                        </div>
+                        <div class="security-tip">
+                            <i class="fas fa-times red"></i>
+                            <span>"Open" mreže su opasne</span>
+                        </div>
+                        <div class="security-tip">
+                            <i class="fas fa-exclamation orange"></i>
+                            <span>Ime lokala + "Guest" = najsigurnije</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="challenge-actions">
+                <button class="action-btn secondary" onclick="showHint('wifi')">
+                    <i class="fas fa-question-circle"></i> Sigurnosni Savjeti
+                </button>
+                <button class="action-btn primary" onclick="submitWifi()">
+                    <i class="fas fa-plug"></i> Poveži se na Mrežu
+                </button>
+            </div>
+        </section>
+
+        <!-- Completion Screen -->
+        <section class="completion-screen" id="completionScreen" style="display: none;">
+            <div class="completion-content">
+                <div class="completion-icon">
+                    <i class="fas fa-trophy"></i>
+                    <div class="confetti"></div>
+                </div>
+                
+                <h2>Čestitamo! Izvršili ste Escape Room!</h2>
+                <p class="completion-subtitle">Vrata su se otvorila, ali pravi test tek počinje...</p>
+                
+                <div class="completion-stats">
+                    <div class="stat-card">
+                        <h4><i class="fas fa-clock"></i> Ukupno vrijeme</h4>
+                        <div class="stat-value" id="totalTime">4:32</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4><i class="fas fa-star"></i> Ukupni bodovi</h4>
+                        <div class="stat-value" id="totalScore">285</div>
+                    </div>
+                    <div class="stat-card">
+                        <h4><i class="fas fa-check-circle"></i> Tačnost</h4>
+                        <div class="stat-value" id="accuracy">92%</div>
+                    </div>
+                </div>
+                
+                <div class="performance-breakdown">
+                    <h3><i class="fas fa-chart-bar"></i> Performansa po izazovima:</h3>
+                    <div class="performance-bars">
+                        <div class="performance-bar">
+                            <div class="bar-label">Lozinka</div>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 95%"></div>
+                            </div>
+                            <div class="bar-value">95%</div>
+                        </div>
+                        <div class="performance-bar">
+                            <div class="bar-label">Phishing</div>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 88%"></div>
+                            </div>
+                            <div class="bar-value">88%</div>
+                        </div>
+                        <div class="performance-bar">
+                            <div class="bar-label">WiFi</div>
+                            <div class="bar-container">
+                                <div class="bar-fill" style="width: 92%"></div>
+                            </div>
+                            <div class="bar-value">92%</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="completion-actions">
+                    <button class="completion-btn secondary" onclick="retryEscapeRoom()">
+                        <i class="fas fa-redo"></i> Pokušaj Ponovo
+                    </button>
+                    <button class="completion-btn primary" onclick="goToProfile()">
+                        <i class="fas fa-user-circle"></i> Vidi svoj Profil
+                    </button>
+                    <button class="completion-btn outline" onclick="goToDashboard()">
+                        <i class="fas fa-tachometer-alt"></i> Dashboard
+                    </button>
+                </div>
+                
+                <div class="completion-warning">
+                    <i class="fas fa-exclamation-triangle"></i>
+                    <p><strong>UPOZORENJE:</strong> Sljedeći korak će testirati tvoje STVARNO ponašanje. Budi spreman!</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Hint Modal -->
+    <div class="hint-modal" id="hintModal">
+        <div class="hint-content">
+            <div class="hint-header">
+                <h3><i class="fas fa-lightbulb"></i> Hint & Rješenje</h3>
+                <button class="hint-close" onclick="closeHint()">&times;</button>
+            </div>
+            <div class="hint-body" id="hintBody">
+                <!-- Hint content loaded by JS -->
+            </div>
+        </div>
+    </div>
+    <script>
+        // Initialize escape room when page loads
+    document.addEventListener('DOMContentLoaded', initEscapeRoom);
+    </script>
+    <script src="script.js"></script>
+</body>
+</html>

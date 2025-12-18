@@ -1,0 +1,776 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Mirror - Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <style>
+        .dashboard-container {
+            padding: 2rem;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+        
+        .dashboard-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid rgba(0, 255, 157, 0.2);
+        }
+        
+        .dashboard-title h1 {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            font-size: 2rem;
+        }
+        
+        .dashboard-title h1 i {
+            color: #00ff9d;
+        }
+        
+        .org-selector {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.8rem 1.5rem;
+            border-radius: 10px;
+            border: 1px solid rgba(108, 99, 255, 0.3);
+        }
+        
+        .org-logo {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #6c63ff, #00d2ff);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+        
+        .kpi-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 3rem;
+        }
+        
+        .kpi-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.3s ease;
+        }
+        
+        .kpi-card:hover {
+            border-color: rgba(0, 255, 157, 0.2);
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(0, 255, 157, 0.1);
+        }
+        
+        .kpi-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .kpi-header h3 {
+            display: flex;
+            align-items: center;
+            gap: 0.8rem;
+            font-size: 1rem;
+            color: #a0aec0;
+            margin: 0;
+        }
+        
+        .trend {
+            font-size: 0.9rem;
+            font-weight: bold;
+            padding: 0.2rem 0.8rem;
+            border-radius: 12px;
+        }
+        
+        .trend.positive {
+            background: rgba(0, 255, 157, 0.1);
+            color: #00ff9d;
+        }
+        
+        .trend.negative {
+            background: rgba(255, 71, 87, 0.1);
+            color: #ff4757;
+        }
+        
+        .kpi-value {
+            font-size: 2.5rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            color: white;
+            margin: 0.5rem 0;
+        }
+        
+        .kpi-progress {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+        
+        .progress-text {
+            color: #a0aec0;
+            font-size: 0.9rem;
+            min-width: 60px;
+        }
+        
+        .charts-section {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+        
+        @media (max-width: 1024px) {
+            .charts-section {
+                grid-template-columns: 1fr;
+            }
+        }
+        
+        .chart-container {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .chart-wrapper {
+            height: 300px;
+            position: relative;
+        }
+        
+        .departments-section {
+            margin-bottom: 3rem;
+        }
+        
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .departments-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+        }
+        
+        .department-card {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            padding: 1.5rem;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .dept-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+        
+        .dept-score {
+            font-size: 2rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+        }
+        
+        .score-excellent { color: #00ff9d; }
+        .score-good { color: #00d2ff; }
+        .score-average { color: #ffb142; }
+        .score-poor { color: #ff4757; }
+        
+        .dept-progress {
+            margin: 1rem 0;
+        }
+        
+        .dept-users {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: #a0aec0;
+            font-size: 0.9rem;
+        }
+        
+        .high-risk-section {
+            margin-bottom: 3rem;
+        }
+        
+        .risk-table {
+            background: rgba(255, 255, 255, 0.03);
+            border-radius: 15px;
+            overflow: hidden;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        
+        .risk-table table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        
+        .risk-table th {
+            background: rgba(0, 255, 157, 0.05);
+            color: #a0aec0;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 500;
+            font-size: 0.9rem;
+        }
+        
+        .risk-table td {
+            padding: 1rem;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            color: #f8f9fa;
+        }
+        
+        .risk-score {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+        
+        .risk-badge {
+            padding: 0.3rem 0.8rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        
+        .risk-high { background: rgba(255, 71, 87, 0.2); color: #ff4757; }
+        .risk-medium { background: rgba(255, 177, 66, 0.2); color: #ffb142; }
+        .risk-low { background: rgba(0, 255, 157, 0.2); color: #00ff9d; }
+        
+        .action-buttons {
+            display: flex;
+            gap: 0.5rem;
+        }
+        
+        .action-btn {
+            background: rgba(255, 255, 255, 0.05);
+            border: none;
+            color: #a0aec0;
+            width: 36px;
+            height: 36px;
+            border-radius: 8px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+        }
+        
+        .action-btn:hover {
+            background: rgba(0, 255, 157, 0.1);
+            color: #00ff9d;
+        }
+        
+        .export-section {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: rgba(0, 255, 157, 0.05);
+            border-radius: 15px;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-background"></div>
+    
+    <div class="dashboard-container">
+        <!-- Header -->
+        <header class="dashboard-header">
+            <div class="dashboard-title">
+                <h1><i class="fas fa-tachometer-alt"></i> Enterprise Dashboard</h1>
+                <p>Analiza performansi - University of Zenica</p>
+            </div>
+            
+            <div class="org-selector">
+                <div class="org-logo">UZ</div>
+                <div>
+                    <h3 style="margin: 0;">University of Zenica</h3>
+                    <p style="margin: 0; color: #a0aec0; font-size: 0.9rem;">Cyber Security Education Program</p>
+                </div>
+            </div>
+        </header>
+        
+        <!-- KPI Cards -->
+        <section class="kpi-section">
+            <div class="kpi-grid">
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <h3><i class="fas fa-shield-alt"></i> Ukupni Security Score</h3>
+                        <span class="trend positive">+15%</span>
+                    </div>
+                    <div class="kpi-value" id="overallScore">74</div>
+                    <div class="kpi-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 74%"></div>
+                        </div>
+                        <span class="progress-text">74/100</span>
+                    </div>
+                    <div class="kpi-details">
+                        <div style="display: flex; justify-content: space-between; margin-top: 1rem;">
+                            <span style="color: #a0aec0;">Visok rizik:</span>
+                            <span style="color: #ff4757; font-weight: bold;">12%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <h3><i class="fas fa-users"></i> Aktivni Korisnici</h3>
+                        <span class="trend positive">+8</span>
+                    </div>
+                    <div class="kpi-value" id="activeUsers">247</div>
+                    <div class="kpi-details">
+                        <div style="margin-top: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="color: #a0aec0;">Završili trening:</span>
+                                <span>89%</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #a0aec0;">U toku:</span>
+                                <span>11%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <h3><i class="fas fa-exclamation-triangle"></i> Phishing Stop Rate</h3>
+                        <span class="trend positive">+18%</span>
+                    </div>
+                    <div class="kpi-value">68%</div>
+                    <div class="kpi-details">
+                        <div style="margin-top: 1rem;">
+                            <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+                                <span style="color: #a0aec0;">Prethodni kvartal:</span>
+                                <span>50%</span>
+                            </div>
+                            <div style="display: flex; justify-content: space-between;">
+                                <span style="color: #a0aec0;">Poboljšanje:</span>
+                                <span style="color: #00ff9d;">+18%</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="kpi-card">
+                    <div class="kpi-header">
+                        <h3><i class="fas fa-calendar-check"></i> Compliance Rate</h3>
+                        <span class="trend positive">92%</span>
+                    </div>
+                    <div class="kpi-value">Na putu</div>
+                    <div class="kpi-details">
+                        <div style="margin-top: 1rem;">
+                            <div style="display: flex; align-items: center; gap: 0.5rem; margin-bottom: 0.5rem;">
+                                <i class="fas fa-check-circle" style="color: #00ff9d;"></i>
+                                <span>Kvartalni trening</span>
+                            </div>
+                            <div style="display: flex; align-items: center; gap: 0.5rem;">
+                                <i class="fas fa-clock" style="color: #ffb142;"></i>
+                                <span>Testiranje u toku</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Charts Section -->
+        <section class="charts-section">
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-chart-line"></i> Trend Security Scora</h3>
+                    <select class="time-select" id="timeRange">
+                        <option value="month">Mjesec dana</option>
+                        <option value="quarter">Kvartal</option>
+                        <option value="year">Godina</option>
+                    </select>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="trendChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-container">
+                <div class="chart-header">
+                    <h3><i class="fas fa-bug"></i> Distribucija Prijetnji</h3>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="threatChart"></canvas>
+                </div>
+            </div>
+        </section>
+        
+        <!-- Departments Section -->
+        <section class="departments-section">
+            <div class="section-header">
+                <h2><i class="fas fa-university"></i> Performansa po Departmanima</h2>
+                <button class="view-details" onclick="viewDepartmentDetails()">
+                    <i class="fas fa-external-link-alt"></i> Detaljni pregled
+                </button>
+            </div>
+            
+            <div class="departments-grid">
+                <div class="department-card">
+                    <div class="dept-header">
+                        <h3>Računarstvo</h3>
+                        <div class="dept-score score-excellent">88</div>
+                    </div>
+                    <div class="dept-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 88%"></div>
+                        </div>
+                    </div>
+                    <div class="dept-users">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>124 studenata</span>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <span class="trend positive" style="display: inline-block;">+8%</span>
+                        <span style="color: #a0aec0; margin-left: 0.5rem;">u odnosu na prošli mjesec</span>
+                    </div>
+                </div>
+                
+                <div class="department-card">
+                    <div class="dept-header">
+                        <h3>Biznis</h3>
+                        <div class="dept-score score-poor">61</div>
+                    </div>
+                    <div class="dept-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 61%"></div>
+                        </div>
+                    </div>
+                    <div class="dept-users">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>87 studenata</span>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <span class="trend negative" style="display: inline-block;">-2%</span>
+                        <span style="color: #a0aec0; margin-left: 0.5rem;">potrebna dodatna obuka</span>
+                    </div>
+                </div>
+                
+                <div class="department-card">
+                    <div class="dept-header">
+                        <h3>Mašinstvo</h3>
+                        <div class="dept-score score-good">79</div>
+                    </div>
+                    <div class="dept-progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 79%"></div>
+                        </div>
+                    </div>
+                    <div class="dept-users">
+                        <i class="fas fa-user-graduate"></i>
+                        <span>156 studenata</span>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <span class="trend positive" style="display: inline-block;">+12%</span>
+                        <span style="color: #a0aec0; margin-left: 0.5rem;">najveći napredak</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <!-- High Risk Users -->
+        <section class="high-risk-section">
+            <div class="section-header">
+                <h2><i class="fas fa-user-shield"></i> Korisnici sa Visokim Rizikom</h2>
+                <span style="color: #a0aec0;">Zahtijevaju dodatnu pažnju</span>
+            </div>
+            
+            <div class="risk-table">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student</th>
+                            <th>Departman</th>
+                            <th>Rizik Score</th>
+                            <th>Posljednji trening</th>
+                            <th>Akcije</th>
+                        </tr>
+                    </thead>
+                    <tbody id="riskTable">
+                        <!-- Will be populated by JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </section>
+        
+        <!-- Export Section -->
+        <section class="export-section">
+            <h2><i class="fas fa-file-export"></i> Izvezi Izvještaj</h2>
+            <p style="color: #a0aec0; margin-bottom: 1.5rem;">Generiši kompletan izvještaj o performansama za upravu fakulteta</p>
+            <div style="display: flex; gap: 1rem; justify-content: center;">
+                <button class="action-btn primary" onclick="generatePDF()">
+                    <i class="fas fa-file-pdf"></i> PDF Izvještaj
+                </button>
+                <button class="action-btn" onclick="exportData()">
+                    <i class="fas fa-file-csv"></i> CSV Podaci
+                </button>
+                <button class="action-btn" onclick="sendReport()">
+                    <i class="fas fa-paper-plane"></i> Pošalji Upravi
+                </button>
+            </div>
+        </section>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Dashboard Data
+        const dashboardData = {
+            overallScore: 74,
+            activeUsers: 247,
+            departments: [
+                { name: "Računarstvo", score: 88, users: 124, trend: "+8%" },
+                { name: "Biznis", score: 61, users: 87, trend: "-2%" },
+                { name: "Mašinstvo", score: 79, users: 156, trend: "+12%" },
+                { name: "Humanistika", score: 52, users: 45, trend: "+5%" }
+            ],
+            highRiskUsers: [
+                { name: "Marko Petrović", department: "Biznis", riskScore: 82, lastTraining: "45 dana", email: "marko.petrovic@student.uni-ze.ba" },
+                { name: "Ana Kovačević", department: "Humanistika", riskScore: 78, lastTraining: "Nikad", email: "ana.kovacevic@student.uni-ze.ba" },
+                { name: "Ivan Durmić", department: "Biznis", riskScore: 75, lastTraining: "60 dana", email: "ivan.durmic@student.uni-ze.ba" },
+                { name: "Maja Babić", department: "Mašinstvo", riskScore: 68, lastTraining: "30 dana", email: "maja.babic@student.uni-ze.ba" }
+            ],
+            trendData: {
+                labels: ["Jan", "Feb", "Mar", "Apr", "Maj"],
+                scores: [58, 62, 65, 71, 74]
+            },
+            threatData: {
+                labels: ["Phishing Linkovi", "CEO Fraud", "Socijalni Inženjering", "Malware", "WiFi Napadi"],
+                frequencies: [89, 42, 56, 34, 23],
+                successRates: [32, 18, 24, 12, 8]
+            }
+        };
+        
+        // Initialize Dashboard
+        function initDashboard() {
+            // Update KPI values
+            document.getElementById('overallScore').textContent = dashboardData.overallScore;
+            document.getElementById('activeUsers').textContent = dashboardData.activeUsers;
+            
+            // Populate risk table
+            populateRiskTable();
+            
+            // Initialize charts
+            initCharts();
+        }
+        
+        function populateRiskTable() {
+            const table = document.getElementById('riskTable');
+            table.innerHTML = '';
+            
+            dashboardData.highRiskUsers.forEach(user => {
+                const row = document.createElement('tr');
+                
+                // Determine risk level and color
+                let riskLevel = 'medium';
+                let riskClass = 'risk-medium';
+                if (user.riskScore >= 75) {
+                    riskLevel = 'visok';
+                    riskClass = 'risk-high';
+                } else if (user.riskScore <= 60) {
+                    riskLevel = 'nizak';
+                    riskClass = 'risk-low';
+                }
+                
+                row.innerHTML = `
+                    <td>
+                        <div style="display: flex; align-items: center; gap: 1rem;">
+                            <div style="width: 40px; height: 40px; background: linear-gradient(135deg, #6c63ff, #00d2ff); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: white; font-weight: bold;">
+                                ${user.name.charAt(0)}
+                            </div>
+                            <div>
+                                <div style="font-weight: bold;">${user.name}</div>
+                                <div style="font-size: 0.9rem; color: #a0aec0;">${user.email}</div>
+                            </div>
+                        </div>
+                    </td>
+                    <td>
+                        <span style="background: rgba(108, 99, 255, 0.1); color: #6c63ff; padding: 0.3rem 0.8rem; border-radius: 12px; font-size: 0.9rem;">
+                            ${user.department}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="risk-score">
+                            <span class="risk-badge ${riskClass}">${user.riskScore}</span>
+                            <span style="color: #a0aec0;">${riskLevel} rizik</span>
+                        </div>
+                    </td>
+                    <td>
+                        <span style="color: ${user.lastTraining === 'Nikad' ? '#ff4757' : user.lastTraining.includes('60') ? '#ffb142' : '#00ff9d'}">
+                            ${user.lastTraining}
+                        </span>
+                    </td>
+                    <td>
+                        <div class="action-buttons">
+                            <button class="action-btn" title="Pošalji podsjetnik" onclick="sendReminder('${user.email}')">
+                                <i class="fas fa-bell"></i>
+                            </button>
+                            <button class="action-btn" title="Dodijeli trening" onclick="assignTraining('${user.email}')">
+                                <i class="fas fa-graduation-cap"></i>
+                            </button>
+                            <button class="action-btn" title="Detalji" onclick="viewUserDetails('${user.email}')">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </td>
+                `;
+                
+                table.appendChild(row);
+            });
+        }
+        
+        function initCharts() {
+            // Trend Chart
+            const trendCtx = document.getElementById('trendChart').getContext('2d');
+            const trendChart = new Chart(trendCtx, {
+                type: 'line',
+                data: {
+                    labels: dashboardData.trendData.labels,
+                    datasets: [{
+                        label: 'Security Score',
+                        data: dashboardData.trendData.scores,
+                        borderColor: '#00ff9d',
+                        backgroundColor: 'rgba(0, 255, 157, 0.1)',
+                        borderWidth: 3,
+                        fill: true,
+                        tension: 0.4,
+                        pointBackgroundColor: '#00ff9d',
+                        pointBorderColor: '#0a0e17',
+                        pointBorderWidth: 2,
+                        pointRadius: 6
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: { display: false },
+                        tooltip: {
+                            backgroundColor: 'rgba(10, 14, 23, 0.9)',
+                            titleColor: '#00ff9d',
+                            bodyColor: '#f8f9fa'
+                        }
+                    },
+                    scales: {
+                        y: {
+                            beginAtZero: true,
+                            max: 100,
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#a0aec0' }
+                        },
+                        x: {
+                            grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                            ticks: { color: '#a0aec0' }
+                        }
+                    }
+                }
+            });
+            
+            // Threat Chart
+            const threatCtx = document.getElementById('threatChart').getContext('2d');
+            const threatChart = new Chart(threatCtx, {
+                type: 'doughnut',
+                data: {
+                    labels: dashboardData.threatData.labels,
+                    datasets: [{
+                        data: dashboardData.threatData.frequencies,
+                        backgroundColor: [
+                            '#ff4757',
+                            '#ffb142',
+                            '#6c63ff',
+                            '#00d2ff',
+                            '#00ff9d'
+                        ],
+                        borderWidth: 2,
+                        borderColor: '#0a0e17'
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '65%',
+                    plugins: {
+                        legend: {
+                            position: 'right',
+                            labels: {
+                                color: '#f8f9fa',
+                                padding: 20,
+                                font: { size: 12 }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+        
+        // Action Functions
+        function viewDepartmentDetails() {
+            alert('Ovo bi otvorilo detaljni pregled departmana u punoj verziji aplikacije.');
+        }
+        
+        function sendReminder(email) {
+            alert(`Podsjetnik poslan na: ${email}`);
+        }
+        
+        function assignTraining(email) {
+            alert(`Trening dodijeljen korisniku: ${email}`);
+        }
+        
+        function viewUserDetails(email) {
+            alert(`Detalji korisnika: ${email}`);
+        }
+        
+        function generatePDF() {
+            alert('PDF izvještaj se generiše...');
+            // Simulate PDF generation
+            setTimeout(() => {
+                alert('PDF izvještaj generisan i spreman za preuzimanje.');
+            }, 1500);
+        }
+        
+        function exportData() {
+            alert('Podaci izvezeni u CSV formatu.');
+        }
+        
+        function sendReport() {
+            alert('Izvještaj poslan upravi fakulteta.');
+        }
+        
+        // Initialize on load
+        document.addEventListener('DOMContentLoaded', initDashboard);
+    </script>
+</body>
+</html>

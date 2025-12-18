@@ -1,0 +1,692 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Mirror - Realni Test</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        .test-container {
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .test-content {
+            max-width: 800px;
+            width: 100%;
+            background: rgba(10, 14, 23, 0.9);
+            border-radius: 20px;
+            padding: 3rem;
+            border: 1px solid rgba(0, 255, 157, 0.2);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .test-content::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 5px;
+            background: linear-gradient(90deg, #00ff9d, #00d2ff, #6c63ff);
+        }
+        
+        .test-icon {
+            font-size: 4rem;
+            color: #00ff9d;
+            margin-bottom: 1.5rem;
+            animation: pulse 2s infinite;
+        }
+        
+        .test-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+            background: linear-gradient(90deg, #00ff9d, #00d2ff);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+        }
+        
+        .test-subtitle {
+            color: #a0aec0;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+        
+        .test-loader {
+            margin: 2rem 0;
+        }
+        
+        .loader-text {
+            color: #00d2ff;
+            margin-bottom: 1rem;
+            font-family: 'Orbitron', sans-serif;
+        }
+        
+        .loader-bar {
+            height: 8px;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 4px;
+            overflow: hidden;
+            margin-bottom: 3rem;
+        }
+        
+        .loader-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #00ff9d, #00d2ff);
+            width: 0%;
+            border-radius: 4px;
+            transition: width 0.3s ease;
+        }
+        
+        .test-disclaimer {
+            background: rgba(255, 71, 87, 0.1);
+            border: 1px solid rgba(255, 71, 87, 0.3);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: left;
+        }
+        
+        .test-disclaimer i {
+            color: #ff4757;
+            margin-right: 0.5rem;
+        }
+        
+        .start-test-btn {
+            background: linear-gradient(90deg, #00ff9d, #00cc7a);
+            color: #0a0e17;
+            border: none;
+            padding: 1.2rem 3rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 600;
+            font-size: 1.2rem;
+            border-radius: 12px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+        
+        .start-test-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(0, 255, 157, 0.3);
+        }
+        
+        .hidden-test {
+            display: none;
+        }
+        
+        /* Fake Popup Styles */
+        .fake-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: white;
+            border-radius: 15px;
+            width: 90%;
+            max-width: 500px;
+            z-index: 10000;
+            box-shadow: 0 30px 80px rgba(0, 0, 0, 0.4);
+            overflow: hidden;
+            animation: popupIn 0.5s cubic-bezier(0.68, -0.55, 0.265, 1.55);
+        }
+        
+        @keyframes popupIn {
+            0% { transform: translate(-50%, -50%) scale(0.5); opacity: 0; }
+            100% { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        }
+        
+        .popup-header {
+            background: linear-gradient(90deg, #6c63ff, #00d2ff);
+            color: white;
+            padding: 2rem;
+            text-align: center;
+        }
+        
+        .popup-header i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .popup-header h3 {
+            margin: 0;
+            font-size: 1.8rem;
+        }
+        
+        .popup-body {
+            padding: 2rem;
+            color: #2d3748;
+        }
+        
+        .popup-body p {
+            margin-bottom: 1.5rem;
+            font-size: 1.1rem;
+            line-height: 1.6;
+        }
+        
+        .reward-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .popup-input {
+            padding: 1rem;
+            border: 2px solid #e2e8f0;
+            border-radius: 10px;
+            font-size: 1rem;
+            text-align: center;
+        }
+        
+        .popup-input:focus {
+            outline: none;
+            border-color: #6c63ff;
+        }
+        
+        .popup-submit {
+            background: linear-gradient(90deg, #00ff9d, #00cc7a);
+            color: #0a0e17;
+            border: none;
+            padding: 1.2rem;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+        
+        .popup-submit:hover {
+            transform: translateY(-2px);
+        }
+        
+        .popup-close {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: none;
+            border: none;
+            color: white;
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: background 0.3s;
+        }
+        
+        .popup-close:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+        
+        .small-text {
+            font-size: 0.9rem;
+            color: #718096;
+            margin-top: 1rem;
+        }
+        
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 9999;
+            backdrop-filter: blur(5px);
+        }
+        
+        /* Results Screen */
+        .results-screen {
+            display: none;
+        }
+        
+        .result-icon {
+            font-size: 5rem;
+            margin-bottom: 2rem;
+        }
+        
+        .success .result-icon {
+            color: #00ff9d;
+            animation: celebrate 1s ease;
+        }
+        
+        .failed .result-icon {
+            color: #ff4757;
+            animation: shake 0.5s ease;
+        }
+        
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+        
+        .result-title {
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+        
+        .result-message {
+            font-size: 1.2rem;
+            line-height: 1.6;
+            margin-bottom: 2rem;
+            max-width: 600px;
+        }
+        
+        .result-stats {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            margin: 3rem 0;
+        }
+        
+        .result-stat {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        .result-stat-value {
+            font-size: 2rem;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+        
+        .result-actions {
+            display: flex;
+            gap: 1rem;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 2rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="cyber-background"></div>
+    
+    <!-- Initial Test Screen -->
+    <div class="test-container" id="initialScreen">
+        <div class="test-content">
+            <div class="test-icon">
+                <i class="fas fa-shield-alt"></i>
+            </div>
+            
+            <h1 class="test-title">Realni Phishing Test</h1>
+            <p class="test-subtitle">
+                Ovo nije još jedna simulacija. Cyber Mirror će sada testirati tvoje <strong>stvarno ponašanje</strong> 
+                u kontrolisanom okruženju. Test će početi nasumično u narednih 60 sekundi.
+            </p>
+            
+            <div class="test-loader">
+                <div class="loader-text">Priprema testa u toku...</div>
+                <div class="loader-bar">
+                    <div class="loader-fill" id="loaderFill"></div>
+                </div>
+            </div>
+            
+            <div class="test-disclaimer">
+                <p><i class="fas fa-exclamation-triangle"></i> <strong>VAŽNO:</strong> Ovo je edukativni test. 
+                Nikakvi lični podaci neće biti prikupljeni ili poslani. Test će simulirati realnu phishing 
+                situaciju kako bi pokazao kako biste reagovali u stvarnom svijetu.</p>
+            </div>
+            
+            <button class="start-test-btn" onclick="beginTest()">
+                <i class="fas fa-play"></i> Započni Test
+            </button>
+        </div>
+    </div>
+    
+    <!-- Hidden Test Elements -->
+    <div class="hidden-test" id="hiddenTest">
+        <!-- This content continues to look like a normal profile page -->
+        <header class="main-header">
+            <div class="logo-container">
+                <div class="logo-icon">
+                    <i class="fas fa-user-secret"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>Cyber Mirror</h1>
+                    <span class="version">2.0</span>
+                </div>
+            </div>
+        </header>
+        
+        <main style="padding: 2rem; max-width: 1000px; margin: 0 auto;">
+            <h2>Vaš Cyber Profil - Pregled</h2>
+            <p>Analiza vašeg učinka u Escape Room-u je gotova. Evo detaljnog pregleda:</p>
+            
+            <div class="stats-grid" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin: 2rem 0;">
+                <div class="stat-box" style="background: rgba(0, 255, 157, 0.1); padding: 1rem; border-radius: 10px;">
+                    <h3>Cyber Score</h3>
+                    <div class="stat-value" style="font-size: 2rem; font-weight: bold;">85/100</div>
+                </div>
+                <div class="stat-box" style="background: rgba(108, 99, 255, 0.1); padding: 1rem; border-radius: 10px;">
+                    <h3>Globalni Rang</h3>
+                    <div class="stat-value" style="font-size: 2rem; font-weight: bold;">#247</div>
+                </div>
+                <div class="stat-box" style="background: rgba(0, 210, 255, 0.1); padding: 1rem; border-radius: 10px;">
+                    <h3>Tačnost</h3>
+                    <div class="stat-value" style="font-size: 2rem; font-weight: bold;">92%</div>
+                </div>
+            </div>
+            
+            <!-- More fake content to make it look real -->
+            <div style="margin: 3rem 0;">
+                <h3>Preporuke za poboljšanje</h3>
+                <ul style="list-style: none; padding: 0;">
+                    <li style="padding: 0.5rem 0;"><i class="fas fa-check" style="color: #00ff9d;"></i> Nastavite sa vježbanjem phishing scenarija</li>
+                    <li style="padding: 0.5rem 0;"><i class="fas fa-check" style="color: #00ff9d;"></i> Koristite password manager</li>
+                    <li style="padding: 0.5rem 0;"><i class="fas fa-check" style="color: #00ff9d;"></i> Uvijek provjerite URL prije klika</li>
+                </ul>
+            </div>
+        </main>
+    </div>
+    
+    <!-- Fake Popup (will appear randomly) -->
+    <div class="overlay" id="popupOverlay" style="display: none;"></div>
+    <div class="fake-popup" id="fakePopup" style="display: none;">
+        <button class="popup-close" id="popupClose">
+            <i class="fas fa-times"></i>
+        </button>
+        
+        <div class="popup-header">
+            <i class="fas fa-gift"></i>
+            <h3>Čestitamo!</h3>
+        </div>
+        
+        <div class="popup-body">
+            <p>Uspješno ste završili Cyber Mirror Escape Room!</p>
+            <p>Kao nagradu, dobivate <strong>Amazon gift card vrijedan 50€</strong>.</p>
+            <p>Unesite svoj email ispod da primite poklon:</p>
+            
+            <div class="reward-form">
+                <input type="email" class="popup-input" id="popupEmail" placeholder="vas@email.com" required>
+                <button class="popup-submit" id="popupSubmit">
+                    <i class="fas fa-gift"></i> Zatraži Nagradu
+                </button>
+            </div>
+            
+            <p class="small-text">Klikom na "Zatraži Nagradu" prihvatate naše uslove korištenja i pristajete na primanje promotivnih poruka.</p>
+        </div>
+    </div>
+    
+    <!-- Results Screen -->
+    <div class="test-container results-screen" id="resultsScreen">
+        <div class="test-content" id="resultsContent">
+            <!-- Results loaded by JavaScript -->
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+    <script>
+        // Test Configuration
+        const testConfig = {
+            minDelay: 10000,    // 10 seconds minimum
+            maxDelay: 30000,    // 30 seconds maximum
+            testDuration: 60000 // 60 seconds total
+        };
+        
+        let testStarted = false;
+        let testPassed = false;
+        let popupTimer;
+        let testTimer;
+        let startTime;
+        
+        // DOM Elements
+        const initialScreen = document.getElementById('initialScreen');
+        const hiddenTest = document.getElementById('hiddenTest');
+        const fakePopup = document.getElementById('fakePopup');
+        const popupOverlay = document.getElementById('popupOverlay');
+        const popupClose = document.getElementById('popupClose');
+        const popupSubmit = document.getElementById('popupSubmit');
+        const popupEmail = document.getElementById('popupEmail');
+        const resultsScreen = document.getElementById('resultsScreen');
+        const resultsContent = document.getElementById('resultsContent');
+        const loaderFill = document.getElementById('loaderFill');
+        
+        // Begin Test
+        function beginTest() {
+            initialScreen.style.display = 'none';
+            hiddenTest.style.display = 'block';
+            
+            // Start loading animation
+            let progress = 0;
+            const loadingInterval = setInterval(() => {
+                progress += 1;
+                loaderFill.style.width = progress + '%';
+                
+                if (progress >= 100) {
+                    clearInterval(loadingInterval);
+                    startRealTest();
+                }
+            }, 30);
+        }
+        
+        function startRealTest() {
+            testStarted = true;
+            startTime = Date.now();
+            
+            // Set random delay for popup (between minDelay and maxDelay)
+            const delay = Math.floor(Math.random() * 
+                (testConfig.maxDelay - testConfig.minDelay)) + testConfig.minDelay;
+            
+            console.log(`Popup will appear in ${delay/1000} seconds`);
+            
+            // Start test timer
+            testTimer = setTimeout(() => {
+                showResults(false); // Timeout - failed to react
+            }, testConfig.testDuration);
+            
+            // Schedule popup appearance
+            popupTimer = setTimeout(showPopup, delay);
+        }
+        
+        function showPopup() {
+            fakePopup.style.display = 'block';
+            popupOverlay.style.display = 'block';
+            
+            // Setup event listeners
+            popupClose.addEventListener('click', handlePopupClose);
+            popupSubmit.addEventListener('click', handlePopupSubmit);
+            popupEmail.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') handlePopupSubmit();
+            });
+        }
+        
+        function handlePopupClose() {
+            // User closed the popup - CORRECT ACTION
+            testPassed = true;
+            clearTimeout(testTimer);
+            showResults(true);
+        }
+        
+        function handlePopupSubmit() {
+            // User tried to submit email - INCORRECT ACTION
+            const email = popupEmail.value.trim();
+            testPassed = false;
+            clearTimeout(testTimer);
+            showResults(false, email);
+        }
+        
+        function showResults(passed, submittedEmail = '') {
+            // Hide popup and overlay
+            fakePopup.style.display = 'none';
+            popupOverlay.style.display = 'none';
+            hiddenTest.style.display = 'none';
+            
+            // Clear any pending timers
+            clearTimeout(popupTimer);
+            clearTimeout(testTimer);
+            
+            // Calculate reaction time
+            const reactionTime = Date.now() - startTime;
+            const reactionSeconds = (reactionTime / 1000).toFixed(1);
+            
+            // Prepare results based on outcome
+            let resultsHTML;
+            
+            if (passed) {
+                resultsHTML = `
+                    <div class="result-icon success">
+                        <i class="fas fa-shield-check"></i>
+                    </div>
+                    <h1 class="result-title" style="color: #00ff9d;">BRAVO! Prošli ste test!</h1>
+                    <div class="result-message">
+                        <p>Prepoznali ste phishing pokušaj i zatvorili ste popup. Ovo je ispravna reakcija u stvarnom svijetu.</p>
+                        <p><strong>Vrijeme reakcije:</strong> ${reactionSeconds} sekundi</p>
+                        <p><strong>Cyber bodovi:</strong> +50</p>
+                    </div>
+                    <div class="result-stats">
+                        <div class="result-stat">
+                            <div class="result-stat-value">✅</div>
+                            <p>Ispravna odluka</p>
+                        </div>
+                        <div class="result-stat">
+                            <div class="result-stat-value">${reactionSeconds}s</div>
+                            <p>Brza reakcija</p>
+                        </div>
+                        <div class="result-stat">
+                            <div class="result-stat-value">+50</div>
+                            <p>Dodani bodovi</p>
+                        </div>
+                    </div>
+                    <div class="result-message">
+                        <h4>🎯 Šta ste naučili:</h4>
+                        <p>Nikad ne dajte lične podatke u popup-ovima koji iznenada izađu. 
+                        Legitimne kompanije ne šalju takve nagrade. Uvijek prvo provjerite URL i autentičnost poruke.</p>
+                    </div>
+                `;
+            } else {
+                resultsHTML = `
+                    <div class="result-icon failed">
+                        <i class="fas fa-skull-crossbones"></i>
+                    </div>
+                    <h1 class="result-title" style="color: #ff4757;">UPOZORENJE! Pali ste na test!</h1>
+                    <div class="result-message">
+                        <p>${submittedEmail ? `Unijeli ste email: "${submittedEmail}"` : 'Niste reagovali na vrijeme.'}</p>
+                        <p>U stvarnom svijetu, sada bi vaš email bio u rukama prevaranata.</p>
+                        <p><strong>Cyber bodovi:</strong> -30</p>
+                    </div>
+                    <div class="result-stats">
+                        <div class="result-stat">
+                            <div class="result-stat-value">❌</div>
+                            <p>Pogrešna odluka</p>
+                        </div>
+                        <div class="result-stat">
+                            <div class="result-stat-value">${submittedEmail ? 'Da' : 'Ne'}</div>
+                            <p>Podaci dati</p>
+                        </div>
+                        <div class="result-stat">
+                            <div class="result-stat-value">-30</div>
+                            <p>Izgubljeni bodovi</p>
+                        </div>
+                    </div>
+                    <div class="result-message">
+                        <h4>🎯 Šta naučiti iz ovoga:</h4>
+                        <ol style="text-align: left; margin-left: 2rem;">
+                            <li><strong>Nikad</strong> ne dajte lične podatke u popup-ovima</li>
+                            <li>"Besplatni" pokloni su često prevare</li>
+                            <li>Provjerite URL prije bilo kakvog unosa podataka</li>
+                            <li>Ako nešto zvuči predobro da bi bilo istinito, vjerovatno nije</li>
+                        </ol>
+                    </div>
+                `;
+            }
+            
+            // Add navigation buttons
+            resultsHTML += `
+                <div class="result-actions">
+                    <button class="step-btn secondary" onclick="retryTest()">
+                        <i class="fas fa-redo"></i> Pokušaj Ponovo
+                    </button>
+                    <button class="step-btn primary" onclick="goToDashboard()">
+                        <i class="fas fa-tachometer-alt"></i> Vidi Dashboard
+                    </button>
+                    <button class="step-btn outline" onclick="goToProfile()">
+                        <i class="fas fa-user-circle"></i> Tvoj Profil
+                    </button>
+                </div>
+            `;
+            
+            // Show results
+            resultsContent.innerHTML = resultsHTML;
+            resultsScreen.style.display = 'flex';
+            
+            // Save test results to localStorage
+            saveTestResults(passed, reactionTime, submittedEmail);
+        }
+        
+        function saveTestResults(passed, reactionTime, submittedEmail) {
+            const testResults = {
+                passed: passed,
+                reactionTime: reactionTime,
+                submittedEmail: submittedEmail,
+                timestamp: new Date().toISOString(),
+                scoreChange: passed ? 50 : -30
+            };
+            
+            // Save to localStorage
+            localStorage.setItem('cyberMirrorTestResults', JSON.stringify(testResults));
+            
+            // Update user profile in localStorage
+            const userProfile = JSON.parse(localStorage.getItem('cyberMirrorProfile')) || {
+                score: 85,
+                testsTaken: 0,
+                testsPassed: 0
+            };
+            
+            userProfile.testsTaken += 1;
+            if (passed) userProfile.testsPassed += 1;
+            userProfile.score += testResults.scoreChange;
+            userProfile.score = Math.max(0, Math.min(100, userProfile.score)); // Keep between 0-100
+            
+            localStorage.setItem('cyberMirrorProfile', JSON.stringify(userProfile));
+            
+            console.log('Test results saved:', testResults);
+            console.log('Updated profile:', userProfile);
+        }
+        
+        // Navigation functions
+        function retryTest() {
+            location.reload();
+        }
+        
+        function goToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+        
+        function goToProfile() {
+            window.location.href = 'profile.html';
+        }
+        
+        // Auto-start test for demo purposes (after 5 seconds)
+        setTimeout(() => {
+            if (!testStarted) {
+                console.log('Auto-starting test for demo');
+                beginTest();
+            }
+        }, 5000);
+    </script>
+</body>
+</html>

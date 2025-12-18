@@ -1,0 +1,546 @@
+<!DOCTYPE html>
+<html lang="bs">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cyber Mirror - Tvoj Profil</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Orbitron:wght@400;500;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <div class="cyber-background"></div>
+    
+    <!-- Profile Header -->
+    <header class="profile-header">
+        <div class="profile-nav">
+            <a href="index.html" class="nav-btn">
+                <i class="fas fa-home"></i> Početna
+            </a>
+            <a href="escape-room.html" class="nav-btn">
+                <i class="fas fa-redo"></i> Ponovi Escape Room
+            </a>
+        </div>
+        
+        <div class="profile-title">
+            <h1><i class="fas fa-user-circle"></i> Tvoj Cyber Profil</h1>
+            <p>Analiza tvog ponašanja u Escape Room-u</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="profile-container">
+        <!-- Profile Summary -->
+        <section class="profile-summary">
+            <div class="summary-card">
+                <div class="avatar-container">
+                    <div class="profile-avatar cyber-guardian" id="profileAvatar">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="avatar-badge" id="profileBadge">
+                        Level 3
+                    </div>
+                </div>
+                
+                <div class="profile-info">
+                    <h2 id="userName">Ammar Puščul</h2>
+                    <div class="profile-type" id="profileType">
+                        <h3>Cyber Guardian</h3>
+                        <p>Iznimno siguran i analitičan korisnik</p>
+                    </div>
+                    
+                    <div class="profile-stats">
+                        <div class="stat">
+                            <span class="stat-label">Cyber Score</span>
+                            <div class="stat-value large" id="cyberScore">85</div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Globalni Rang</span>
+                            <div class="stat-value">#247</div>
+                        </div>
+                        <div class="stat">
+                            <span class="stat-label">Izazovi riješeni</span>
+                            <div class="stat-value">3/3</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="score-breakdown">
+                <h3><i class="fas fa-chart-pie"></i> Raspodjela bodova</h3>
+                <div class="breakdown-chart">
+                    <canvas id="scoreChart"></canvas>
+                </div>
+                <div class="breakdown-legend">
+                    <div class="legend-item">
+                        <span class="legend-color password"></span>
+                        <span>Lozinka: 95/100</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color phishing"></span>
+                        <span>Phishing: 88/100</span>
+                    </div>
+                    <div class="legend-item">
+                        <span class="legend-color wifi"></span>
+                        <span>WiFi: 92/100</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Profile Type Details -->
+        <section class="profile-type-details">
+            <div class="type-header">
+                <h2><i class="fas fa-id-card"></i> Tvoj Cyber Tip</h2>
+                <div class="type-meter">
+                    <div class="meter-bar">
+                        <div class="meter-fill" id="typeMeter" style="width: 85%"></div>
+                    </div>
+                    <div class="meter-labels">
+                        <span>Početnik</span>
+                        <span>Ekspert</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="type-grid" id="typeGrid">
+                <div class="type-card active">
+                    <div class="type-icon">
+                        <i class="fas fa-user-shield"></i>
+                    </div>
+                    <div class="type-name">Cyber Guardian</div>
+                    <div class="type-description">
+                        Iznimno siguran i analitičan. Uvijek provjerava detalje prije bilo kakve akcije.
+                    </div>
+                </div>
+                
+                <div class="type-card">
+                    <div class="type-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <div class="type-name">Target Practitioner</div>
+                    <div class="type-description">
+                        Dobar instinkt, brzo uči. Ponekad žuri s odlukama, ali rijetko griješi.
+                    </div>
+                </div>
+                
+                <div class="type-card">
+                    <div class="type-icon">
+                        <i class="fas fa-user-clock"></i>
+                    </div>
+                    <div class="type-name">Risk Taker</div>
+                    <div class="type-description">
+                        Ponekad riskira, ali uči iz grešaka. Potrebna mu je dodatna pažnja.
+                    </div>
+                </div>
+                
+                <div class="type-card">
+                    <div class="type-icon">
+                        <i class="fas fa-user-slash"></i>
+                    </div>
+                    <div class="type-name">Phishing Magnet</div>
+                    <div class="type-description">
+                        Često pada na prevare. Potrebna mu je dodatna edukacija i praksa.
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Behavioral Analysis -->
+        <section class="behavior-analysis">
+            <h2><i class="fas fa-brain"></i> Analiza Ponašanja</h2>
+            
+            <div class="behavior-grid">
+                <div class="behavior-card">
+                    <div class="behavior-icon">
+                        <i class="fas fa-clock"></i>
+                    </div>
+                    <h3>Vrijeme Odlučivanja</h3>
+                    <div class="behavior-value">12.4s</div>
+                    <p>Prosjek po odgovoru</p>
+                    <div class="behavior-rating good">
+                        <i class="fas fa-arrow-up"></i>
+                        <span>Brže od 78% korisnika</span>
+                    </div>
+                </div>
+                
+                <div class="behavior-card">
+                    <div class="behavior-icon">
+                        <i class="fas fa-search"></i>
+                    </div>
+                    <h3>Analitičnost</h3>
+                    <div class="behavior-value">87%</div>
+                    <p>Korištenje analitičkih alata</p>
+                    <div class="behavior-rating excellent">
+                        <i class="fas fa-star"></i>
+                        <span>Iznad prosjeka</span>
+                    </div>
+                </div>
+                
+                <div class="behavior-card">
+                    <div class="behavior-icon">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <h3>Prepoznavanje Prijetnji</h3>
+                    <div class="behavior-value">92%</div>
+                    <p>Tačnost u prepoznavanju</p>
+                    <div class="behavior-rating good">
+                        <i class="fas fa-check-circle"></i>
+                        <span>Dobar instinkt</span>
+                    </div>
+                </div>
+                
+                <div class="behavior-card">
+                    <div class="behavior-icon">
+                        <i class="fas fa-user-friends"></i>
+                    </div>
+                    <h3>Socijalni Inženjering</h3>
+                    <div class="behavior-value">65%</div>
+                    <p>Otpornost na manipulaciju</p>
+                    <div class="behavior-rating warning">
+                        <i class="fas fa-exclamation"></i>
+                        <span>Potrebno poboljšanje</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Weaknesses & Strengths -->
+        <section class="weaknesses-strengths">
+            <div class="ws-column strengths">
+                <h3><i class="fas fa-thumbs-up"></i> Tvoje Snage</h3>
+                <ul class="ws-list strengths">
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Analiza lozinki</strong>
+                            <p>Odlično prepoznaješ jake lozinke i razumiješ šta čini lozinku sigurnom.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>WiFi sigurnost</strong>
+                            <p>Razumiješ "evil twin" napade i znaš kako prepoznati legitimne mreže.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>Brzo odlučivanje</strong>
+                            <p>Ne gubiš vrijeme na nebitno, ali ne žuriš previše.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+            
+            <div class="ws-column weaknesses">
+                <h3><i class="fas fa-exclamation-triangle"></i> Područja za Poboljšanje</h3>
+                <ul class="ws-list weaknesses">
+                    <li>
+                        <i class="fas fa-times-circle"></i>
+                        <div>
+                            <strong>Socijalni inženjering</strong>
+                            <p>Ponekad padaš na emocionalne trikove i urgentne poruke.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-times-circle"></i>
+                        <div>
+                            <strong>Provjera detalja</strong>
+                            <p>Preskačeš email headere i ne provjeravaš uvijek URL-ove do kraja.</p>
+                        </div>
+                    </li>
+                    <li>
+                        <i class="fas fa-times-circle"></i>
+                        <div>
+                            <strong>Urgentni zahtjevi</strong>
+                            <p>Žuriš kada vidiš "HITNO" ili "ODMAH" u porukama.</p>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Recommendations -->
+        <section class="recommendations">
+            <h2><i class="fas fa-robot"></i> AI Preporuke</h2>
+            
+            <div class="rec-cards">
+                <div class="rec-card urgent">
+                    <div class="rec-header">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <h3>Prioritetna Akcija</h3>
+                    </div>
+                    <p>Vježbaj prepoznavanje socijalnog inženjeringa kroz CEO fraud scenarije. Ovo je tvoja najveća slabost.</p>
+                    <button class="rec-btn" onclick="startTraining('social')">
+                        <i class="fas fa-play"></i> Započni Trening
+                    </button>
+                </div>
+                
+                <div class="rec-card">
+                    <div class="rec-header">
+                        <i class="fas fa-book"></i>
+                        <h3>Edukativni Sadržaj</h3>
+                    </div>
+                    <p>Pročitaj članak o analizi email headera za bolje prepoznavanje phishing napada.</p>
+                    <button class="rec-btn outline" onclick="openArticle('email-headers')">
+                        <i class="fas fa-external-link-alt"></i> Pročitaj
+                    </button>
+                </div>
+                
+                <div class="rec-card">
+                    <div class="rec-header">
+                        <i class="fas fa-tasks"></i>
+                        <h3>Dnevni Challenge</h3>
+                    </div>
+                    <p>Riješi 5 phishing email scenarija u narednih 7 dana da poboljšaš svoje vještine.</p>
+                    <div class="progress">
+                        <div class="progress-bar">
+                            <div class="progress-fill" style="width: 40%"></div>
+                        </div>
+                        <span>2/5 završeno</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Next Steps -->
+        <section class="next-steps">
+            <div class="steps-warning">
+                <i class="fas fa-exclamation-triangle"></i>
+                <div>
+                    <h3>PAŽNJA: Sljedeći korak je REALNI TEST</h3>
+                    <p>Cyber Mirror će sada testirati tvoje STVARNO ponašanje. Nećeš biti upozoren kada test počne. Budi oprezan!</p>
+                </div>
+            </div>
+            
+            <div class="steps-actions">
+                <button class="step-btn secondary" onclick="goToEscapeRoom()">
+                    <i class="fas fa-redo"></i> Vježbaj Još
+                </button>
+                <button class="step-btn primary" onclick="continueToTest()">
+                    <i class="fas fa-forward"></i> Nastavi na Realni Test
+                </button>
+                <button class="step-btn outline" onclick="goToDashboard()">
+                    <i class="fas fa-tachometer-alt"></i> Vidi Dashboard
+                </button>
+            </div>
+            
+            <div class="steps-note">
+                <p><strong>Napomena:</strong> Realni test simulira stvarni phishing napad. Tvoja reakcija će uticati na finalni cyber score i tip korisnika.</p>
+            </div>
+        </section>
+    </main>
+
+    <!-- JavaScript -->
+    <script>
+        // Initialize Profile Page
+        document.addEventListener('DOMContentLoaded', function() {
+            const currentPage = window.location.pathname.split('/').pop();
+    
+        if (currentPage === 'profile.html') {
+        initProfilePage();
+    }
+            initProfilePage();
+            setupProfileInteractions();
+        });
+
+        function initProfilePage() {
+            console.log('Initializing profile page...');
+            
+            // Load user data from localStorage
+            const userData = JSON.parse(localStorage.getItem('cyberMirrorUser')) || {};
+            const escapeData = JSON.parse(localStorage.getItem('escapeRoomCompletion')) || {};
+            
+            // Update user info
+            document.getElementById('userName').textContent = userData.name || 'Cyber Korisnik';
+            document.getElementById('cyberScore').textContent = userData.score || 85;
+            
+            // Initialize chart
+            initProfileChart();
+            
+            // Setup profile type based on score
+            setupProfileType(userData.score || 85);
+        }
+
+        function setupProfileInteractions() {
+            // Profile type cards
+            document.querySelectorAll('.type-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    document.querySelectorAll('.type-card').forEach(c => {
+                        c.classList.remove('active');
+                    });
+                    this.classList.add('active');
+                    
+                    const typeName = this.querySelector('.type-name').textContent;
+                    updateProfileType(typeName);
+                });
+            });
+            
+            // Recommendation buttons
+            document.querySelectorAll('.rec-btn').forEach(btn => {
+                btn.addEventListener('click', function() {
+                    const action = this.textContent.trim();
+                    if (action.includes('Trening')) {
+                        showNotification('Trening', 'Započinje trening socijalnog inženjeringa...', 'info');
+                    } else if (action.includes('Pročitaj')) {
+                        window.open('https://www.example.com/cyber-security-guide', '_blank');
+                    }
+                });
+            });
+            
+            // Navigation buttons
+            document.querySelector('[onclick="goToEscapeRoom()"]').addEventListener('click', function() {
+                window.location.href = 'escape-room.html';
+            });
+            
+            document.querySelector('[onclick="continueToTest()"]').addEventListener('click', function() {
+                window.location.href = 'phishing-test.html';
+            });
+            
+            document.querySelector('[onclick="goToDashboard()"]').addEventListener('click', function() {
+                window.location.href = 'dashboard.html';
+            });
+        }
+
+        function initProfileChart() {
+            const ctx = document.getElementById('scoreChart').getContext('2d');
+            
+            // Create chart
+            new Chart(ctx, {
+                type: 'doughnut',
+                data: {
+                    labels: ['Lozinka', 'Phishing', 'WiFi'],
+                    datasets: [{
+                        data: [95, 88, 92],
+                        backgroundColor: [
+                            'rgba(0, 255, 157, 0.8)',
+                            'rgba(108, 99, 255, 0.8)',
+                            'rgba(0, 210, 255, 0.8)'
+                        ],
+                        borderWidth: 2,
+                        borderColor: 'var(--dark)',
+                        hoverOffset: 15
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    cutout: '70%',
+                    plugins: {
+                        legend: {
+                            display: false
+                        },
+                        tooltip: {
+                            backgroundColor: 'rgba(10, 14, 23, 0.9)',
+                            titleColor: '#f8f9fa',
+                            bodyColor: '#f8f9fa',
+                            callbacks: {
+                                label: function(context) {
+                                    return `${context.label}: ${context.parsed}%`;
+                                }
+                            }
+                        }
+                    }
+                }
+            });
+        }
+
+        function setupProfileType(score) {
+            let profileType = '';
+            let profileDescription = '';
+            let avatarClass = '';
+            let avatarIcon = '';
+            
+            if (score >= 90) {
+                profileType = 'Cyber Guardian';
+                profileDescription = 'Iznimno siguran i analitičan korisnik';
+                avatarClass = 'cyber-guardian';
+                avatarIcon = 'user-shield';
+            } else if (score >= 70) {
+                profileType = 'Target Practitioner';
+                profileDescription = 'Dobar instinkt, brzo uči';
+                avatarClass = 'target-practitioner';
+                avatarIcon = 'user-check';
+            } else if (score >= 50) {
+                profileType = 'Risk Taker';
+                profileDescription = 'Ponekad riskira, ali uči iz grešaka';
+                avatarClass = 'risk-taker';
+                avatarIcon = 'user-clock';
+            } else {
+                profileType = 'Phishing Magnet';
+                profileDescription = 'Potrebna dodatna edukacija';
+                avatarClass = 'phishing-magnet';
+                avatarIcon = 'user-slash';
+            }
+            
+            // Update profile type display
+            const profileTypeElement = document.getElementById('profileType');
+            if (profileTypeElement) {
+                profileTypeElement.innerHTML = `
+                    <h3>${profileType}</h3>
+                    <p>${profileDescription}</p>
+                `;
+            }
+            
+            // Update avatar
+            const profileAvatar = document.getElementById('profileAvatar');
+            if (profileAvatar) {
+                profileAvatar.className = `profile-avatar ${avatarClass}`;
+                profileAvatar.innerHTML = `<i class="fas fa-${avatarIcon}"></i>`;
+            }
+            
+            // Update meter
+            const typeMeter = document.getElementById('typeMeter');
+            if (typeMeter) {
+                typeMeter.style.width = `${score}%`;
+            }
+            
+            // Update active type card
+            document.querySelectorAll('.type-card').forEach(card => {
+                card.classList.remove('active');
+                const cardType = card.querySelector('.type-name').textContent;
+                if (cardType === profileType) {
+                    card.classList.add('active');
+                }
+            });
+        }
+
+        function updateProfileType(typeName) {
+            // Update avatar based on selected type
+            const profileAvatar = document.getElementById('profileAvatar');
+            const types = {
+                'Cyber Guardian': { class: 'cyber-guardian', icon: 'user-shield' },
+                'Target Practitioner': { class: 'target-practitioner', icon: 'user-check' },
+                'Risk Taker': { class: 'risk-taker', icon: 'user-clock' },
+                'Phishing Magnet': { class: 'phishing-magnet', icon: 'user-slash' }
+            };
+            
+            if (types[typeName] && profileAvatar) {
+                profileAvatar.className = `profile-avatar ${types[typeName].class}`;
+                profileAvatar.innerHTML = `<i class="fas fa-${types[typeName].icon}"></i>`;
+            }
+        }
+
+        // Navigation functions
+        function goToEscapeRoom() {
+            window.location.href = 'escape-room.html';
+        }
+
+        function continueToTest() {
+            window.location.href = 'phishing-test.html';
+        }
+
+        function goToDashboard() {
+            window.location.href = 'dashboard.html';
+        }
+
+        function showNotification(title, message, type) {
+            // Simple notification function
+            alert(`${title}: ${message}`);
+        }
+    </script>
+</body>
+</html>
